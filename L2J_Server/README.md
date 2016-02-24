@@ -1,4 +1,4 @@
-L2J Green Project (code from L2J Server) ==============
+
 
 L2J Green is an open-source server emulator fully written in Java for the MMORPG Lineage II. Our code is based on L2J Server most recent H5 source.
 --------------
