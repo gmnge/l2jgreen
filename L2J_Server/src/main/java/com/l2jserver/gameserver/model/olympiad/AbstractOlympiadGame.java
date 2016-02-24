@@ -44,6 +44,8 @@ import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
+import net.sf.eventengine.EventEngineManager;
+
 /**
  * @author godson, GodKratos, Pere, DS
  */
@@ -120,6 +122,12 @@ public abstract class AbstractOlympiadGame
 		if ((player.getClient() == null) || player.getClient().isDetached())
 		{
 			return SystemMessage.getSystemMessage(SystemMessageId.THE_GAME_HAS_BEEN_CANCELLED_BECAUSE_THE_OTHER_PARTY_ENDS_THE_GAME);
+		}
+		
+		// L2J EventEngine
+		if (EventEngineManager.getInstance().isPlayableInEvent(player))
+		{
+			return SystemMessage.getSystemMessage(SystemMessageId.THE_GAME_HAS_BEEN_CANCELLED_BECAUSE_THE_OTHER_PARTY_DOES_NOT_MEET_THE_REQUIREMENTS_FOR_JOINING_THE_GAME);
 		}
 		
 		// safety precautions

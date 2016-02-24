@@ -49,6 +49,8 @@ import com.l2jserver.gameserver.network.serverpackets.ExUseSharedGroupItem;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
+import net.sf.eventengine.EventEngineManager;
+
 public final class UseItem extends L2GameClientPacket
 {
 	private static final String _C__19_USEITEM = "[C] 19 UseItem";
@@ -171,6 +173,12 @@ public final class UseItem extends L2GameClientPacket
 					}
 				}
 			}
+		}
+		
+		// L2J EventEngine
+		if (EventEngineManager.getInstance().listenerOnUseItem(activeChar, item.getItem()))
+		{
+			return;
 		}
 		
 		// If the item has reuse time and it has not passed.
@@ -327,7 +335,8 @@ public final class UseItem extends L2GameClientPacket
 		else
 		{
 			final L2Weapon weaponItem = activeChar.getActiveWeaponItem();
-			if (((weaponItem != null) && (weaponItem.getItemType() == WeaponType.FISHINGROD)) && (((_itemId >= 6519) && (_itemId <= 6527)) || ((_itemId >= 7610) && (_itemId <= 7613)) || ((_itemId >= 7807) && (_itemId <= 7809)) || ((_itemId >= 8484) && (_itemId <= 8486)) || ((_itemId >= 8505) && (_itemId <= 8513))))
+			if (((weaponItem != null) && (weaponItem.getItemType() == WeaponType.FISHINGROD))
+				&& (((_itemId >= 6519) && (_itemId <= 6527)) || ((_itemId >= 7610) && (_itemId <= 7613)) || ((_itemId >= 7807) && (_itemId <= 7809)) || ((_itemId >= 8484) && (_itemId <= 8486)) || ((_itemId >= 8505) && (_itemId <= 8513))))
 			{
 				activeChar.getInventory().setPaperdollItem(Inventory.PAPERDOLL_LHAND, item);
 				activeChar.broadcastUserInfo();
